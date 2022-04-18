@@ -1,0 +1,6 @@
+file A.dat: 8200 blocks
+file B.dat: 24 blocks
+file C.dat: 24 blocks
+file D.dat: 32 blocks
+file A.dat.gz: 16 blocks
+file B.dat.gz: 16 blocks

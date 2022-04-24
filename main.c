@@ -20,32 +20,40 @@ int main(int argc, char *argv[]) {
             { "block",     1,  NULL,   'b'},
             { NULL,   0,        NULL, 0}
     };
-    const char* const one_param = "-b";
+    const char *const one_param = "-b";
     char *input = NULL;
     char *output = NULL;
     int param;
     int block_size = 4096;
     do {
         param = getopt_long(argc, argv, one_param, params, NULL);
-        if (param == 'b') {
-            if (sscanf(optarg, "%d", & block_size) != 1 || block_size <= 0) {
-                fprintf(stderr, block_size_error);
+        switch (param) {
+            case 'b':
+                if (sscanf(optarg, "%d", &block_size) != 1 || block_size <= 0) {
+                    fprintf(stderr, block_size_error);
+                    exit(EXIT_FAILURE);
+                }
+                break;
+            case 1:
+                if (input == NULL) {
+                    char *file = (char *) malloc(strlen(optarg) + 1);
+                    strcpy(file, optarg);
+                    input = file;
+                    break;
+                }
+                if (output == NULL) {
+                    char *file = (char *) malloc(strlen(optarg) + 1);
+                    strcpy(file, optarg);
+                    output = file;
+                    break;
+                }
+                fprintf(stderr, params_error);
                 exit(EXIT_FAILURE);
-            }
-        }
-        if (param == 1) {
-            if (input == NULL) {
-                char *file = (char *) malloc(strlen(optarg) + 1);
-                strcpy(file, optarg);
-                input = file;
-            }
-            if (output == NULL) {
-                char *file = (char *) malloc(strlen(optarg) + 1);
-                strcpy(file, optarg);
-                output = file;
-            }
-            fprintf(stderr, params_error);
-            exit(EXIT_FAILURE);
+                break;
+            default:
+                fprintf(stderr, params_error);
+                exit(EXIT_FAILURE);
+                break;
         }
     } while (param != -1);
     if (input == NULL) {

@@ -50,10 +50,6 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, params_error);
                 exit(EXIT_FAILURE);
                 break;
-            default:
-                fprintf(stderr, params_error);
-                exit(EXIT_FAILURE);
-                break;
         }
     } while (param != -1);
     if (input == NULL) {

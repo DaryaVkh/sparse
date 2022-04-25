@@ -2,7 +2,6 @@
 #include<stdlib.h>
 #include<sys/stat.h>
 #include<fcntl.h>
-#include<unistd.h>
 #include<string.h>
 #include<getopt.h>
 
@@ -20,13 +19,12 @@ int main(int argc, char *argv[]) {
             { "block",     1,  NULL,   'b'},
             { NULL,   0,        NULL, 0}
     };
-    const char *const one_param = "-b";
     char *input = NULL;
     char *output = NULL;
     int param;
     int block_size = 4096;
     do {
-        param = getopt_long(argc, argv, one_param, params, NULL);
+        param = getopt_long(argc, argv, "b:", params, NULL);
         switch (param) {
             case 'b':
                 if (sscanf(optarg, "%d", &block_size) != 1 || block_size <= 0) {
@@ -49,7 +47,9 @@ int main(int argc, char *argv[]) {
                 }
                 fprintf(stderr, params_error);
                 exit(EXIT_FAILURE);
-                break;
+            case '?':
+                fprintf(stderr, params_error);
+                exit(EXIT_FAILURE);
         }
     } while (param != -1);
     if (input == NULL) {

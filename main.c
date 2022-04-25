@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     int param;
     int block_size = 4096;
     do {
-        param = getopt_long(argc, argv, "b:", params, NULL);
+        param = getopt_long(argc, argv, "-b:", params, NULL);
         switch (param) {
             case 'b':
                 if (sscanf(optarg, "%d", &block_size) != 1 || block_size <= 0) {

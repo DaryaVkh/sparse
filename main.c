@@ -4,6 +4,7 @@
 #include<fcntl.h>
 #include<string.h>
 #include<getopt.h>
+#include<unistd.h>
 
 #define true 1
 #define block_size_error "Block size error"
